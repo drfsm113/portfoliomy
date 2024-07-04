@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Hello</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif; /* Use a professional sans-serif font */
+            background-color: #f0f0f0; /* Light background color */
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh; /* Full viewport height */
+        }
+
+        #greeting {
+            font-size: 3rem; /* Large font size */
+            text-align: center;
+            color: #333; /* Dark text color */
+            margin-top: -10px; /* Adjust as needed */
+        }
+    </style>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var hour = new Date().getHours();
+            var greeting;
+
+            if (hour < 12) {
+                greeting = "Good Morning";
+            } else if (hour < 18) {
+                greeting = "Good Afternoon";
+            } else {
+                greeting = "Good Evening";
+            }
+
+            var greetingElement = document.getElementById("greeting");
+            if (greetingElement) {
+                greetingElement.textContent = "Hello Mohan, " + greeting;
+            }
+        });
+    </script>
+</head>
+<body>
+    <h1 id="greeting"></h1>
+</body>
+</html>

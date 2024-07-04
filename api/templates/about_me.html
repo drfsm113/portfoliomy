@@ -1,0 +1,59 @@
+<!-- portfolio/templates/about_me.html -->
+{% extends 'base.html' %}
+
+{% block title %}About Me - Portfolio Website{% endblock %}
+
+{% block extra_css %}
+<!-- Additional CSS specific to about me page -->
+<style>
+    .bio {
+        max-width: 600px;
+        margin: auto;
+    }
+    .bio img {
+        max-width: 100%;
+        height: auto;
+        margin-bottom: 20px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container" id="about-me">
+    <div class="bio">
+        <img id="profile-image" src="{% static 'img/profile.jpg' %}" alt="Profile Image">
+        <h2 id="profile-name">Loading...</h2>
+        <p id="profile-bio">Loading bio...</p>
+        <div id="profile-links">
+            <!-- Links will be populated dynamically -->
+        </div>
+    </div>
+</div>
+
+<script>
+    // AJAX request to fetch About Me details
+    $(document).ready(function() {
+        $.ajax({
+            url: '/api/about_me/',  // Replace with your Django API endpoint URL for AboutMe
+            type: 'GET',
+            success: function(data) {
+                $('#profile-name').text(data.name);
+                $('#profile-bio').text(data.bio);
+                $('#profile-image').attr('src', '{% static "img/profile.jpg" %}');
+
+                var linksHTML = '';
+                if (data.github_link) {
+                    linksHTML += `<a href="${data.github_link}" class="btn btn-primary">GitHub</a>`;
+                }
+                if (data.linkedin_link) {
+                    linksHTML += `<a href="${data.linkedin_link}" class="btn btn-primary">LinkedIn</a>`;
+                }
+                $('#profile-links').html(linksHTML);
+            },
+            error: function(xhr, status, error) {
+                console.error('Error fetching data:', error);
+            }
+        });
+    });
+</script>
+{% endblock %}

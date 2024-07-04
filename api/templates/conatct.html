@@ -1,0 +1,72 @@
+<!-- portfolio/templates/contact.html -->
+{% extends 'base.html' %}
+
+{% block title %}Contact - Portfolio Website{% endblock %}
+
+{% block extra_css %}
+<!-- Additional CSS specific to contact page -->
+<style>
+    .contact-form {
+        max-width: 400px;
+        margin: auto;
+    }
+    .contact-form .form-control {
+        margin-bottom: 15px;
+    }
+    .contact-form .btn-primary {
+        background-color: #007bff;
+        border-color: #007bff;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container" id="contact-form">
+    <h2>Contact Me</h2>
+    <form>
+        <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" class="form-control" id="name" placeholder="Enter your name">
+        </div>
+        <div class="form-group">
+            <label for="email">Email address</label>
+            <input type="email" class="form-control" id="email" placeholder="Enter your email">
+        </div>
+        <div class="form-group">
+            <label for="message">Message</label>
+            <textarea class="form-control" id="message" rows="5" placeholder="Enter your message"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+
+<script>
+    // AJAX request to handle form submission
+    $(document).ready(function() {
+        $('#contact-form form').submit(function(event) {
+            event.preventDefault();
+            var formData = {
+                'name': $('#name').val(),
+                'email': $('#email').val(),
+                'message': $('#message').val()
+            };
+            $.ajax({
+                url: '/api/contact_messages/',  // Replace with your Django API endpoint URL for contact messages
+                type: 'POST',
+                data: formData,
+                success: function(response) {
+                    alert('Message sent successfully!');
+                    // Clear form fields after successful submission
+                    $('#name').val('');
+                    $('#email').val('');
+                    $('#message').val('');
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error sending message:', error);
+                    alert('Failed to send message. Please try again.');
+                }
+            });
+        });
+    });
+</script>
+{% endblock %}
